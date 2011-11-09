@@ -77,9 +77,7 @@ for  i=1:m
   z3 = Theta2*[1; a2];
   a3 = sigmoid(z3);
 
-  for k=1:num_labels
-    J += -yy(i,k)*log(a3(k))-(1-yy(i,k))*log(1-a3(k));
-  end
+  J += -yy(i,:)*log(a3)-(1-yy(i,:))*log(1-a3);
 end
 
 J /= m
