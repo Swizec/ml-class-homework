@@ -35,13 +35,13 @@ costFunc = @(p) nnCostFunction(p, input_layer_size, hidden_layer_size, ...
 numgrad = computeNumericalGradient(costFunc, nn_params);
 
 % Visually examine the two gradient computations.  The two columns
-% you get should be very similar. 
+% you get should be very similar.
 disp([numgrad grad]);
 fprintf(['The above two columns you get should be very similar.\n' ...
          '(Left-Your Numerical Gradient, Right-Analytical Gradient)\n\n']);
 
-% Evaluate the norm of the difference between two solutions.  
-% If you have a correct implementation, and assuming you used EPSILON = 0.0001 
+% Evaluate the norm of the difference between two solutions.
+% If you have a correct implementation, and assuming you used EPSILON = 0.0001
 % in computeNumericalGradient.m, then diff below should be less than 1e-9
 diff = norm(numgrad-grad)/norm(numgrad+grad);
 

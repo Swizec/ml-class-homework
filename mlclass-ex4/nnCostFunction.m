@@ -69,7 +69,6 @@ end
 
 X = [ones(m,1) X];
 
-i=1;
 for  i=1:m
   a1 = X(i,:);
   z2 = Theta1*a1';
@@ -84,11 +83,26 @@ J /= m;
 
 J += (lambda/(2*m))*(sum(sum(Theta1(:,2:end).^2))+sum(sum(Theta2(:,2:end).^2)));
 
+t=1;
+for t=1:m
+  % forward pass
+  a1 = X(t,:);
+  z2 = Theta1*a1';
+  a2 = [1; sigmoid(z2)];
+  z3 = Theta2*a2;
+  a3 = sigmoid(z3);
 
+  % backprop
+  delta3 = a3-yy(t,:)';
+  delta2 = (Theta2'*delta3).*[1; sigmoidGradient(z2)];
+  delta2 = delta2(2:end);
 
+  Theta1_grad = Theta1_grad + delta2*a1;
+  Theta2_grad = Theta2_grad + delta3*a2';
+end
 
-
-
+Theta1_grad /= m;
+Theta2_grad /= m;
 
 
 % -------------------------------------------------------------
