@@ -80,7 +80,7 @@ for  i=1:m
   J += -yy(i,:)*log(a3)-(1-yy(i,:))*log(1-a3);
 end
 
-J /= m
+J /= m;
 
 
 
