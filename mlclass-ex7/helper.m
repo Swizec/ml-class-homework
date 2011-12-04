@@ -3,18 +3,11 @@ load ('ex7data1.mat');
 
 [X_norm, mu, sigma] = featureNormalize(X);
 
-%  Run PCA
-[U, S] = pca(X_norm);
+K = 1;
+Z = projectData(X_norm, U, K);
+fprintf('Projection of the first example: %f\n', Z(1));
+fprintf('\n(this value should be about 1.481274)\n\n');
 
-%  Compute mu, the mean of the each feature
-
-%  Draw the eigenvectors centered at mean of data. These lines show the
-%  directions of maximum variations in the dataset.
-hold on;
-drawLine(mu, mu + 1.5 * S(1,1) * U(:,1)', '-k', 'LineWidth', 2);
-drawLine(mu, mu + 1.5 * S(2,2) * U(:,2)', '-k', 'LineWidth', 2);
-hold off;
-
-fprintf('Top eigenvector: \n');
-fprintf(' U(:,1) = %f %f \n', U(1,1), U(2,1));
-fprintf('\n(you should expect to see -0.707107 -0.707107)\n');
+X_rec  = recoverData(Z, U, K);
+fprintf('Approximation of the first example: %f %f\n', X_rec(1, 1), X_rec(1, 2));
+fprintf('\n(this value should be about  -1.047419 -1.047419)\n\n');
