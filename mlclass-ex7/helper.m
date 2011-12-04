@@ -1,23 +1,20 @@
-load('ex7data2.mat');
+%clear ; close all; clc
+load ('ex7data1.mat');
 
-% Select an initial set of centroids
-K = 3; % 3 Centroids
-initial_centroids = [3 3; 6 2; 8 5];
+[X_norm, mu, sigma] = featureNormalize(X);
 
-% Find the closest centroids for the examples using the
-% initial_centroids
-idx = findClosestCentroids(X, initial_centroids);
+%  Run PCA
+[U, S] = pca(X_norm);
 
-fprintf('\nComputing centroids means.\n\n');
+%  Compute mu, the mean of the each feature
 
-%  Compute means based on the closest centroids found in the previous part.
-centroids = computeCentroids(X, idx, K);
+%  Draw the eigenvectors centered at mean of data. These lines show the
+%  directions of maximum variations in the dataset.
+hold on;
+drawLine(mu, mu + 1.5 * S(1,1) * U(:,1)', '-k', 'LineWidth', 2);
+drawLine(mu, mu + 1.5 * S(2,2) * U(:,2)', '-k', 'LineWidth', 2);
+hold off;
 
-fprintf('Centroids computed after initial finding of closest centroids: \n')
-fprintf(' %f %f \n' , centroids');
-fprintf('\n(the centroids should be\n');
-fprintf('   [ 2.428301 3.157924 ]\n');
-fprintf('   [ 5.813503 2.633656 ]\n');
-fprintf('   [ 7.119387 3.616684 ]\n\n');
-
-fprintf('Program paused. Press enter to continue.\n');
+fprintf('Top eigenvector: \n');
+fprintf(' U(:,1) = %f %f \n', U(1,1), U(2,1));
+fprintf('\n(you should expect to see -0.707107 -0.707107)\n');
