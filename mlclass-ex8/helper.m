@@ -19,4 +19,4 @@ fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
 
 
 %  Check gradients by running checkNNGradients
-%checkCostFunction(1.5);
+checkCostFunction(1.5);
