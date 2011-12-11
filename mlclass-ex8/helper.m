@@ -1,13 +1,19 @@
 
-load('ex8data1.mat');
+load ('ex8_movies.mat');
 
-[mu sigma2] = estimateGaussian(X);
+%  Load pre-trained weights (X, Theta, num_users, num_movies, num_features)
+load ('ex8_movieParams.mat');
 
-pval = multivariateGaussian(Xval, mu, sigma2);
+%  Reduce the data set size so that this runs faster
+num_users = 4; num_movies = 5; num_features = 3;
+X = X(1:num_movies, 1:num_features);
+Theta = Theta(1:num_users, 1:num_features);
+Y = Y(1:num_movies, 1:num_users);
+R = R(1:num_movies, 1:num_users);
 
-[epsilon F1] = selectThreshold(yval, pval);
+%  Evaluate cost function
+J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
+               num_features, 0);
 
-fprintf('Best epsilon found using cross-validation: %e\n', epsilon);
-fprintf('Best F1 on Cross Validation Set:  %f\n', F1);
-fprintf('   (you should see a value epsilon of about 8.99e-05)\n\n');
-
+fprintf(['Cost at loaded parameters: %f '...
+         '\n(this value should be about 22.22)\n'], J);
