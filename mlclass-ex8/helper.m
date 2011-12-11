@@ -12,9 +12,11 @@ Y = Y(1:num_movies, 1:num_users);
 R = R(1:num_movies, 1:num_users);
 
 J = cofiCostFunc([X(:) ; Theta(:)], Y, R, num_users, num_movies, ...
-               num_features, 0);
+               num_features, 1.5);
 
-fprintf('\nChecking Gradients (without regularization) ... \n');
+fprintf(['Cost at loaded parameters (lambda = 1.5): %f '...
+         '\n(this value should be about 31.34)\n'], J);
+
 
 %  Check gradients by running checkNNGradients
-checkCostFunction;
+%checkCostFunction(1.5);
